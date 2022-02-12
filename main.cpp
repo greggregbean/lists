@@ -15,7 +15,7 @@ int main()
     listInsert(&lst, 0, 10);
     listInsert(&lst, 1, 20);
     listInsert(&lst, 2, 30);
-    listInsert(&lst, 4, 50);
+    listInsert(&lst, 3, 40);
 
 
     return 0;

@@ -105,15 +105,41 @@ int listInsert(list* lst, int afterEl, int val)
     return NOERROR;
 }
 
-void ListDelete(list* lst, int afterEl)
+int ListDelete(list* lst, int afterEl)
 {
     printf("LISTDELETE: \n");
     printf("afterEl = %d \n", afterEl);
 
     assert(lst != NULL);
 
+    if(lst -> numOfEl == 1)
+    {
+        printf("Now there will be no elements in list. \n");
+    }
+
+    else(lst -> numOfEl == 0)
+    {
+        printf("There no elements in list! \n");
+        return ERROR;
+    }
+
+    lst -> data[(lst -> data[afterEl]).next] = 0;
+
+    (lst -> data[lst -> free]).next = -(lst -> data[afterEl]).next;
+
+    (lst -> data[afterEl]).next = (lst -> data[(lst -> data[afterEl]).next]).next;
+    (lst -> data[(lst -> data[(lst -> data[afterEl]).next]).next]).prev = (lst -> data[(lst -> data[afterEl]).next]).prev;
+
+    (lst -> data[(lst -> data[afterEl]).next]).prev = 0;
+    (lst -> data[(lst -> data[afterEl]).next]).next = 0;
 
 
+
+
+
+
+
+    (lst -> numOfEl)--;
 }
 
 /*void listDelete(list* lst, int afterEl)

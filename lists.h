@@ -23,5 +23,5 @@ typedef struct
 void listConstructor(list* lst);
 void listDump(list* lst);
 int listInsert(list* lst, int cell, int val);
-void listDelete(list* lst, int cell);
+int listDelete(list* lst, int cell);
 
