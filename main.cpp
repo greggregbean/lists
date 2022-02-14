@@ -15,7 +15,11 @@ int main()
     listInsert(&lst, 0, 10);
     listInsert(&lst, 1, 20);
     listInsert(&lst, 2, 30);
-    listInsert(&lst, 3, 40);
+    listInsert(&lst, 1, 40);
+    listDelete(&lst, 1);
+    listDelete(&lst, 5);
+
+    listDistructor(&lst);
 
 
     return 0;

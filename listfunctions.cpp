@@ -2,7 +2,7 @@ void listDump(list* lst)
 {
     printf("LIST DUMP: \n");
 
-    printf("Free = %d \n", lst -> free);
+    printf("Free = %d; NumOfEl = %d \nHead = %d; Tail    = %d \n", lst -> free, lst -> numOfEl, lst -> head, lst -> tail);
 
     printf("     ");
 
@@ -37,7 +37,7 @@ void listDump(list* lst)
 
 void listConstructor(list* lst)
 {
-    printf("--- CONSTRUCTION STARTED  ---\n");
+    printf("\n+++ CONSTRUCTION +++\n\n");
 
     assert(lst != NULL);
 
@@ -57,13 +57,13 @@ void listConstructor(list* lst)
 
     listDump(lst);
 
-    printf("--- CONSTRUCTION FINISHED ---\n\n");
+    printf("\n");
 }
 
 int listInsert(list* lst, int afterEl, int val)
 {
     printf("LISTINSERT: \n");
-    printf("afterEl = %d; Val = %d \n", afterEl, val);
+    printf("afterEl = %d; Value   = %d \n", afterEl, val);
 
     assert(lst != NULL);
 
@@ -82,18 +82,28 @@ int listInsert(list* lst, int afterEl, int val)
 
     if(lst -> numOfEl == 0)
     {
+        //Next & Prev for the first inserted cell
         (lst -> data[lst -> free]).next = 0;
         (lst -> data[lst -> free]).prev = 0;
     }
 
     else
     {
+        //Prev for inserted cell
         (lst -> data[lst -> free]).prev = afterEl;
+        //Next for inserted cell
         (lst -> data[lst -> free]).next = (lst -> data[afterEl]).next;
+        //Next for afterEl
         (lst -> data[afterEl]).next = lst -> free;
+        //Case when the elementd is inserted in the end of the list
         if (afterEl + 1 != lst -> free)
             (lst -> data[(lst -> data[lst -> free]).next]).prev = lst -> free;
     }
+
+    if((lst -> data[lst -> free]).next == 0)
+        lst -> tail = lst -> free;
+    else if((lst -> data[lst -> free]).prev == 0)
+        lst -> head = lst -> free;
 
     lst -> free = newfree;
     (lst -> numOfEl)++;
@@ -105,7 +115,7 @@ int listInsert(list* lst, int afterEl, int val)
     return NOERROR;
 }
 
-int ListDelete(list* lst, int afterEl)
+int listDelete(list* lst, int afterEl)
 {
     printf("LISTDELETE: \n");
     printf("afterEl = %d \n", afterEl);
@@ -117,30 +127,52 @@ int ListDelete(list* lst, int afterEl)
         printf("Now there will be no elements in list. \n");
     }
 
-    else(lst -> numOfEl == 0)
+    else if (lst -> numOfEl == 0)
     {
-        printf("There no elements in list! \n");
+        printf("There no elements in list! \n\n");
         return ERROR;
     }
 
-    lst -> data[(lst -> data[afterEl]).next] = 0;
+    else if ((lst -> data[afterEl]).next < 0)
+    {
+        printf("You can't delete the element after %d, because it's free! \n\n");
+        return ERROR;
+    }
 
-    (lst -> data[lst -> free]).next = -(lst -> data[afterEl]).next;
-
+    // 0 val in free cell
+    (lst -> data[(lst -> data[afterEl]).next]).num = 0;
+    // Newfree
+    int newfree = (lst -> data[afterEl]).next;
+    // Prev for cell after deleted
+    (lst -> data[(lst -> data[newfree]).next]).prev = afterEl;
+    // Next for afterEl
     (lst -> data[afterEl]).next = (lst -> data[(lst -> data[afterEl]).next]).next;
-    (lst -> data[(lst -> data[(lst -> data[afterEl]).next]).next]).prev = (lst -> data[(lst -> data[afterEl]).next]).prev;
-
-    (lst -> data[(lst -> data[afterEl]).next]).prev = 0;
-    (lst -> data[(lst -> data[afterEl]).next]).next = 0;
-
-
-
-
-
-
+    // Next for deleted cell
+    (lst -> data[newfree]).next = -(lst -> free);
+    // Changing free
+    lst -> free = newfree;
+    // Prev for free cell
+    (lst -> data[newfree]).prev = 0;
 
     (lst -> numOfEl)--;
+
+    listDump(lst);
+
+    printf("\n");
+
+    return NOERROR;
 }
 
-/*void listDelete(list* lst, int afterEl)
-{}*/
+void listDistructor(list* lst)
+{
+    assert(lst != NULL);
+
+    free(lst -> data);
+
+    *lst = {'\0'};
+
+    printf("--- DISTRUCTION ---\n\n");
+}
+
+
+
