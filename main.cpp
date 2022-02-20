@@ -6,6 +6,8 @@
 #include "lists.h"
 #include "listfunctions.cpp"
 
+FILE* graph = fopen("graph.dot", "w");
+
 int main()
 {
     list lst = {};
@@ -16,11 +18,11 @@ int main()
     listInsert(&lst, 1, 20);
     listInsert(&lst, 2, 30);
     listInsert(&lst, 1, 40);
-    listDelete(&lst, 1);
     listDelete(&lst, 5);
 
-    listDistructor(&lst);
+    listGraph(graph, &lst);
 
+    listDistructor(&lst);
 
     return 0;
 }

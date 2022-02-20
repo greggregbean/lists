@@ -1,3 +1,32 @@
+void listGraph(FILE* graph, list* lst)
+{
+    printf("LISTGRAPH: \nGraph has been created. Graph in graph.png.\n\n");
+
+    fprintf(graph, "digraph \n{\n");
+
+    int next = lst -> head;
+
+    int i = 1;
+
+    while (i <= lst -> numOfEl)
+    {
+        fprintf(graph, " %d [shape=record, label = \" %d | {Addr: %d| Num: %d| Next: %d| Prev: %d} \" ] \n",
+                        i, i, next, (lst -> data[next]).num, (lst -> data[next]).next, (lst -> data[next]).prev);
+        next = (lst -> data[next]).next;
+        i++;
+    }
+
+    i = 1;
+
+    while (i < lst -> numOfEl)
+    {
+        fprintf(graph," %d -> %d; \n", i, i + 1);
+        i++;
+    }
+
+    fprintf(graph, "}");
+}
+
 void listDump(list* lst)
 {
     printf("LIST DUMP: \n");
@@ -33,6 +62,7 @@ void listDump(list* lst)
     }
 
     printf("\n");
+
 }
 
 void listConstructor(list* lst)
@@ -144,9 +174,9 @@ int listDelete(list* lst, int afterEl)
     // Newfree
     int newfree = (lst -> data[afterEl]).next;
     // Prev for cell after deleted
-    (lst -> data[(lst -> data[newfree]).next]).prev = afterEl;
+    (lst -> data[(lst -> data[newfree]).next]).prev = (lst -> data[newfree]).prev;
     // Next for afterEl
-    (lst -> data[afterEl]).next = (lst -> data[(lst -> data[afterEl]).next]).next;
+    (lst -> data[afterEl]).next = (lst -> data[newfree]).next;
     // Next for deleted cell
     (lst -> data[newfree]).next = -(lst -> free);
     // Changing free

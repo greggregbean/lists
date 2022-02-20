@@ -1,0 +1,10 @@
+digraph 
+{
+ 1 [shape=record, label = " 1 | {Addr: 1| Num: 10| Next: 4| Prev: 0} " ] 
+ 2 [shape=record, label = " 2 | {Addr: 4| Num: 40| Next: 2| Prev: 1} " ] 
+ 3 [shape=record, label = " 3 | {Addr: 2| Num: 20| Next: 3| Prev: 4} " ] 
+ 4 [shape=record, label = " 4 | {Addr: 3| Num: 30| Next: 0| Prev: 2} " ] 
+ 1 -> 2; 
+ 2 -> 3; 
+ 3 -> 4; 
+}
