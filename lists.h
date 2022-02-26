@@ -21,6 +21,7 @@ typedef struct
 }list;
 
 void listConstructor(list* lst);
+void listSorter(list* lst);
 void listDump(list* lst);
 int listInsert(list* lst, int cell, int val);
 int listDelete(list* lst, int cell);

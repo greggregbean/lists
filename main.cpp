@@ -22,6 +22,8 @@ int main()
 
     listGraph(graph, &lst);
 
+    listSorter(&lst);
+
     listDistructor(&lst);
 
     return 0;

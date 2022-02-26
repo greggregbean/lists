@@ -1,6 +1,60 @@
+void listSorter(list* lst)
+{
+    printf("LISTSORTER: \n");
+
+    // Variables for changing elements
+    int changeCell       = 0;
+    int numOfChangeCell  = 0;
+    int nextOfChangeCell = 0;
+    int prevOfChangeCell = 0;
+
+    int curCell = lst -> head;
+
+    int i = 1;
+
+    while(curCell != 0)
+    {
+        // If physical number does not match with the logical one
+        if(curCell != i)
+        {
+            // Remember the parametrs of cell for change
+            changeCell = i;
+            numOfChangeCell  = (lst -> data[changeCell]).num;
+            nextOfChangeCell = (lst -> data[changeCell]).next;
+            prevOfChangeCell = (lst -> data[changeCell]).prev;
+
+            // Change prev for next element of curCell
+            (lst -> data[(lst -> data[curCell]).next]).prev = changeCell;
+            // Change next for prev element of changeCell
+            (lst -> data[(lst -> data[changeCell]).prev]).next = curCell;
+
+            // Change parametrs of changeCell
+            (lst -> data[changeCell]).num  = (lst -> data[curCell]).num;
+            (lst -> data[changeCell]).next = (lst -> data[curCell]).next;
+            (lst -> data[changeCell]).prev = (lst -> data[curCell]).next;
+
+            // Change parametrs of curCell
+            (lst -> data[curCell]).num  = numOfChangeCell;
+            (lst -> data[curCell]).next = nextOfChangeCell;
+            (lst -> data[curCell]).next = prevOfChangeCell;
+
+            // Change the curCell
+            curCell = nextOfChangeCell;
+        }
+
+        curCell = (lst -> data[curCell]).next;
+
+        i++;
+    }
+
+    printf("List has been sorted. Let's see the result. \n");
+
+    listDump(lst);
+}
+
 void listGraph(FILE* graph, list* lst)
 {
-    printf("LISTGRAPH: \nGraph has been created. Graph in graph.png.\n\n");
+    printf("LISTGRAPH: \n");
 
     fprintf(graph, "digraph \n{\n");
 
@@ -25,6 +79,8 @@ void listGraph(FILE* graph, list* lst)
     }
 
     fprintf(graph, "}");
+
+    printf("Graph has been created. Graph in graph.png.\n\n");
 }
 
 void listDump(list* lst)
