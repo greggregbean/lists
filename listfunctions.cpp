@@ -2,54 +2,36 @@ void listSorter(list* lst)
 {
     printf("LISTSORTER: \n");
 
-    // Variables for changing elements
-    int changeCell       = 0;
-    int numOfChangeCell  = 0;
-    int nextOfChangeCell = 0;
-    int prevOfChangeCell = 0;
+    list sortedlst = {};
 
-    int curCell = lst -> head;
+    listConstructor(&sortedlst);
 
-    int i = 1;
+    int cell = lst -> head;
 
-    while(curCell != 0)
+    for(int i = 1; i <= lst -> numOfEl; i++)
     {
-        // If physical number does not match with the logical one
-        if(curCell != i)
+        (sortedlst.data[i]).num = (lst -> data[cell]).num;
+
+        (sortedlst.data[i]).next = i + 1;
+
+        if(i == lst -> numOfEl)
         {
-            // Remember the parametrs of cell for change
-            changeCell = i;
-            numOfChangeCell  = (lst -> data[changeCell]).num;
-            nextOfChangeCell = (lst -> data[changeCell]).next;
-            prevOfChangeCell = (lst -> data[changeCell]).prev;
-
-            // Change prev for next element of curCell
-            (lst -> data[(lst -> data[curCell]).next]).prev = changeCell;
-            // Change next for prev element of changeCell
-            (lst -> data[(lst -> data[changeCell]).prev]).next = curCell;
-
-            // Change parametrs of changeCell
-            (lst -> data[changeCell]).num  = (lst -> data[curCell]).num;
-            (lst -> data[changeCell]).next = (lst -> data[curCell]).next;
-            (lst -> data[changeCell]).prev = (lst -> data[curCell]).next;
-
-            // Change parametrs of curCell
-            (lst -> data[curCell]).num  = numOfChangeCell;
-            (lst -> data[curCell]).next = nextOfChangeCell;
-            (lst -> data[curCell]).next = prevOfChangeCell;
-
-            // Change the curCell
-            curCell = nextOfChangeCell;
+            (sortedlst.data[i]).next = 0;
         }
 
-        curCell = (lst -> data[curCell]).next;
+        (sortedlst.data[i]).prev = i - 1;
 
-        i++;
+        cell = (lst -> data[cell]).next;
     }
 
-    printf("List has been sorted. Let's see the result. \n");
+    sortedlst.head = 1;
+    sortedlst.tail = lst -> numOfEl;
+
+    *lst = sortedlst;
 
     listDump(lst);
+
+    printf("\n");
 }
 
 void listGraph(FILE* graph, list* lst)
