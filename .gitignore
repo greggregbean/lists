@@ -3,3 +3,5 @@
 *.exe
 *.exe
 main.exe
+*.json
+run

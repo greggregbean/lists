@@ -203,7 +203,7 @@ int listDelete(list* lst, int afterEl)
 
     else if ((lst -> data[afterEl]).next < 0)
     {
-        printf("You can't delete the element after %d, because it's free! \n\n");
+        printf("You can't delete the element after %d, because it's free! \n\n", afterEl);
         return ERROR;
     }
 
@@ -231,16 +231,16 @@ int listDelete(list* lst, int afterEl)
     return NOERROR;
 }
 
-void listDistructor(list* lst)
+/*void listDistructor(list* lst)
 {
     assert(lst != NULL);
 
     free(lst -> data);
 
-    *lst = {'\0'};
+    *lst = '\0';
 
     printf("--- DISTRUCTION ---\n\n");
-}
+}*/
 
 
 
