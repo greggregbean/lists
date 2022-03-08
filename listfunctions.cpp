@@ -231,16 +231,16 @@ int listDelete(list* lst, int afterEl)
     return NOERROR;
 }
 
-/*void listDistructor(list* lst)
+void listDistructor(list* lst)
 {
     assert(lst != NULL);
 
     free(lst -> data);
 
-    *lst = '\0';
+    lst = nullptr;
 
     printf("--- DISTRUCTION ---\n\n");
-}*/
+}
 
 
 

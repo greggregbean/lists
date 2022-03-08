@@ -24,7 +24,7 @@ int main()
 
     listSorter(&lst);
 
-    //listDistructor(&lst);
+    listDistructor(&lst);
 
     return 0;
 }
